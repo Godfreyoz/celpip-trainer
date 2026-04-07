@@ -2,46 +2,55 @@
 
 A full-stack web application for CELPIP exam preparation, built for Canadian PR applicants. Features AI-powered writing correction, reading comprehension tasks, progress tracking, user authentication, and an admin dashboard.
 
+## 🌐 Live Demo
+
+| Service | URL |
+|---------|-----|
+| 🖥️ Frontend | [https://celpip-trainer-nine.vercel.app](https://celpip-trainer-nine.vercel.app) |
+| 🔌 Backend API | [https://celpip-trainer-api.onrender.com](https://celpip-trainer-api.onrender.com) |
+
 ---
 
 ## ✨ Features
 
-- **AI Writing Feedback** — Spelling errors, grammar corrections, informal language detection, corrected version of your response
-- **Reading Comprehension** — CELPIP-style passages with detailed answer explanations
-- **Improvement Tasks** — AI-generated targeted exercises based on your weak areas
-- **Progress Tracking** — Score history, streaks, and averages across all sessions
-- **Authentication** — Register, login, email verification, forgot/reset password
-- **Admin Dashboard** — Manage users, view activity, activate/deactivate accounts
+* **AI Writing Feedback** — Spelling errors, grammar corrections, informal language detection, corrected version of your response
+* **Reading Comprehension** — CELPIP-style passages with detailed answer explanations
+* **Improvement Tasks** — AI-generated targeted exercises based on your weak areas
+* **Progress Tracking** — Score history, streaks, and averages across all sessions
+* **Authentication** — Register, login, email verification, forgot/reset password
+* **Admin Dashboard** — Manage users, view activity, activate/deactivate accounts
 
 ---
 
 ## 🛠 Tech Stack
 
 | Layer | Technology |
-|---|---|
+|-------|------------|
 | Backend | Django 4.2 + Django REST Framework |
 | Frontend | React 18 + Vite |
-| Database | PostgreSQL (Supabase recommended) |
+| Database | PostgreSQL (Supabase) |
 | AI | Anthropic Claude API |
 | Email | SMTP (Gmail / SendGrid) |
 | Auth | JWT (djangorestframework-simplejwt) |
+| Deployment | Render (backend) + Vercel (frontend) |
 
 ---
 
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Python 3.10+
-- Node.js 18+
-- PostgreSQL database
-- Anthropic API key
+
+* Python 3.12+
+* Node.js 18+
+* PostgreSQL database
+* Anthropic API key
 
 ---
 
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/celpip-trainer.git
+git clone https://github.com/Godfreyoz/celpip-trainer.git
 cd celpip-trainer
 ```
 
@@ -113,7 +122,6 @@ Edit `.env`:
 
 ```env
 VITE_API_URL=http://localhost:8000/api
-VITE_ANTHROPIC_API_KEY=sk-ant-your-key-here
 ```
 
 Start the dev server:
@@ -122,7 +130,7 @@ Start the dev server:
 npm run dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173)
+Open http://localhost:5173
 
 ---
 
@@ -153,33 +161,40 @@ celpip-trainer/
 ## 🔐 Admin Access
 
 After creating a superuser:
-1. Go to `/admin` in the frontend
-2. Or use Django admin at `http://localhost:8000/admin`
+
+1. Go to `/django-admin/` on your backend URL
+2. Log in with your superuser credentials
 
 Admin can:
-- View all registered users
-- Activate / deactivate accounts
-- See each user's session history and scores
-- View total platform usage stats
+
+* View all registered users
+* Activate / deactivate accounts
+* See each user's session history and scores
+* View total platform usage stats
 
 ---
 
 ## 🌍 Deployment
 
 ### Backend (Render)
-1. Connect your GitHub repo to Render
-2. Set build command: `pip install -r requirements.txt && python manage.py migrate`
-3. Set start command: `gunicorn core.wsgi:application`
-4. Add all environment variables
 
-### Frontend (Vercel / Netlify)
-1. Connect your GitHub repo
-2. Set build command: `npm run build`
-3. Set output directory: `dist`
-4. Add `VITE_API_URL` pointing to your Render backend URL
+1. Connect your GitHub repo to Render
+2. Set **Python Version** environment variable: `PYTHON_VERSION=3.12.9`
+3. Set build command: `pip install -r backend/requirements.txt && cd backend && python manage.py migrate && python manage.py collectstatic --noinput`
+4. Set start command: `cd backend && gunicorn core.wsgi:application`
+5. Add all environment variables including `ALLOWED_HOSTS=your-app.onrender.com`
+
+### Frontend (Vercel)
+
+1. Connect your GitHub repo to Vercel
+2. Set **Root Directory** to `frontend`
+3. Set build command: `npm run build`
+4. Set output directory: `dist`
+5. Add `VITE_API_URL` pointing to your Render backend URL
 
 ### Database
-Use [Supabase](https://supabase.com) free tier — copy the connection string (Session Pooler mode) into `DATABASE_URL`.
+
+Use [Supabase](https://supabase.com) free tier — copy the **Session Pooler** connection string into `DATABASE_URL`.
 
 ---
 
